@@ -1,0 +1,22 @@
+lib = File.join(File.dirname(__FILE__), %w(.. lib))
+$:.unshift(lib) if File.exists?(lib) unless $:.member?(lib)
+
+require "#{lib}/machinator"
+
+describe Machinator::Obfuscator, "#initialize" do
+
+  it "it's alive!" do
+    test = Machinator::Obfuscator.new
+  end
+
+end
+
+describe Machinator::ConsoleInterface, "#initialize" do
+
+  MOCK_ARGV = []
+
+  it "it's alive!" do
+    test = Machinator::ConsoleInterface.new MOCK_ARGV
+  end
+
+end
