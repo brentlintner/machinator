@@ -1,6 +1,7 @@
 module Machinator
   class ConsoleInterface    
 
+VERSION_TEXT = 'Machinator v0.1'
 HELP = <<TEXT
 
 == Machinator
@@ -19,6 +20,8 @@ TEXT
       @argv = argv
       @options = OpenStruct.new
       @options.verbose = false
+      
+      parsed_options?
     end
     
     def options
@@ -32,30 +35,33 @@ TEXT
     def parsed_options?
       opts = OptionParser.new
       
-      opts.on('-v', '--version')   { self.log("0.1") ; exit!(0) }    
+      opts.on('-v', '--version')   { log(VERSION_TEXT) ; exit!(0) }    
       opts.on('-h', '--help')      { help }
       
-      opts.on('-o', '--obfuscate PATH') do |path|
-        Obfuscator.new(path)
+      opts.on('-o', '--obfuscate [path]') do |path|
       end
 
       begin
         opts.parse!(@argv)
       rescue Exception => e
-        self.handle_exception(e) ; exit!(0)
+        handle_exception(e) ; exit!(0)
       end
     
-      self.process_options
+      process_options
       
       true
     end
     
     def process_options ; end
 
-    def handle_exception(e)      
-      msg = e.message = e.exception.to_s + " :: " + msg if e.message.to_s != e.exception.to_s
-      self.log "\nShit Pooped --> #{e.class.to_s}\nMESSAGE --> #{msg}"
-      self.log "\nStack\n#{e.backtrace.join("\n")}\n"
+    def log(msg)
+      puts(msg)
+    end
+    
+    def handle_exception(e)            
+      log("\nshit pooped!\n\n")
+      log "#{e.class.to_s} ==> #{e.message}\n\n"
+      log e.backtrace.join("\n")
     end
     
   end

@@ -9,16 +9,16 @@ Machinator lets you define the schema for obfuscation.
 A schema (in yaml) is defined in a .machinator file in the current directory. 
 A schema has a string and a paths hash collection, with each key/pair being a regular expression and string to replace with any occurences, respectively.
 
-    An example:
+An example:
 
-        strings: {      
-            namepsace\.Foo: nameSpace.bar            
-        }  
-            
-        paths: {
-            SomeFile\.js$: ABC.js,
-            \/SomeFolder\/$: hehehe
-        }
+    strings: {      
+        namepsace\.Foo: nameSpace.bar            
+    }  
+        
+    paths: {
+        SomeFile\.js$: ABC.js,
+        \/SomeFolder\/$: hehehe
+    }
 
             
 == Using in code
@@ -39,10 +39,7 @@ Or (with the source) you can just:
 
         
 == Dependencies
-    
-rubygems (parseconfig)
-install all dependencies with Bundler by running "bundle install"
-
+None    
         
 == Tests
     
