@@ -43,7 +43,8 @@ None
         
 == Tests
     
-You need rspec http://rspec.info/
+You need rspec: http://rspec.info
+
 spec tests/machinator.rspec
 
     
