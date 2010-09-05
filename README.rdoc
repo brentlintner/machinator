@@ -4,10 +4,10 @@ http://rubygems.org/gems/machinator
 
 == Usage
 
-    Machinator lets you define the schema for obfuscation. 
+Machinator lets you define the schema for obfuscation. 
     
-    A schema (in yaml) is defined in a .machinator file in the current directory. 
-    A schema has a string and a paths hash collection, with each key/pair being a regular expression and string to replace with any occurences, respectively.
+A schema (in yaml) is defined in a .machinator file in the current directory. 
+A schema has a string and a paths hash collection, with each key/pair being a regular expression and string to replace with any occurences, respectively.
 
     An example:
 
@@ -29,28 +29,30 @@ http://rubygems.org/gems/machinator
 
 == Terminal usage
 
-    As a ruby gem:
-        machinator -h
+As a ruby gem
+
+    machinator -h
   
-    Or (with the source) you can just:
-        ruby bin/machinator -h
+Or (with the source) you can just:
+
+    ruby bin/machinator -h
 
         
 == Dependencies
     
-    rubygems (parseconfig)
-    install all dependencies with Bundler by running "bundle install"
+rubygems (parseconfig)
+install all dependencies with Bundler by running "bundle install"
 
         
 == Tests
     
-    You need rspec http://rspec.info/
-    spec tests/machinator.rspec
+You need rspec http://rspec.info/
+spec tests/machinator.rspec
 
     
 == Author
     
-    Copyright 2010 Brent Lintner
+Copyright 2010 Brent Lintner
 
-    The MIT License
-    http://www.opensource.org/licenses/mit-license.php
+The MIT License
+http://www.opensource.org/licenses/mit-license.php
