@@ -2,11 +2,12 @@ Keep big brother distracted by obfuscating your code, file and folder names.
 
 http://rubygems.org/gems/machinator
 
-== Usage
+== Obfuscating
 
 Machinator lets you define the schema for obfuscation. 
     
-A schema (in yaml) is defined in a .machinator file in the current directory. 
+A schema (in yaml) is defined in a .machinator file in the current directory. If no file is found then
+a valid yaml resource is expected.
 A schema has a string and a paths hash collection, with each key/pair being a regular expression and string to replace with any occurences, respectively.
 
 An example:
@@ -16,16 +17,13 @@ An example:
     }  
         
     paths: {
-        SomeFile\.js$: ABC.js,
-        \/SomeFolder\/$: hehehe
+        SomeFile\.js$: ABC.js
     }
-
             
 == Using in code
 
     require "machinator"
     test = Machinator::Obfuscator.new
-
 
 == Terminal usage
 
@@ -37,17 +35,16 @@ Or (with the source) you can just:
 
     ruby bin/machinator -h
 
-        
 == Dependencies
+
 None    
         
 == Tests
     
-You need rspec: http://rspec.info
+You need mocha for mocking (using Test::Unit)
 
-spec tests/machinator.rspec
+ruby tests/machinator.rb
 
-    
 == Author
     
 Copyright 2010 Brent Lintner

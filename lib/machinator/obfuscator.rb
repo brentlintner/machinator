@@ -1,21 +1,11 @@
 module Machinator
   class Obfuscator
+    require 'yaml'
+    class SpecialException < RuntimeError ; end
     
-    def initialize 
+    def self.some_method(resource=nil)
+      YAML::load(resource)
     end
-    
-    def obfuscate(path_or_string)      
-    end
-    
-    protected
-    
-    def obfuscate_file(str)
-      
-    end
-    
-    def obfuscate_path(str)
-      
-    end
-    
+
   end
 end
