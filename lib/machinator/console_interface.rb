@@ -18,9 +18,7 @@ TEXT
     
     def initialize(argv)
       @argv = argv
-      @options = OpenStruct.new
-      @options.verbose = false
-      
+      @options = OpenStruct.new      
       parsed_options?
     end
     
@@ -33,8 +31,10 @@ TEXT
     end
     
     def parsed_options?
-      opts = OptionParser.new
+      @options.verbose = false
       
+      opts = OptionParser.new
+            
       opts.on('-v', '--version')   { log(VERSION_TEXT) ; exit!(0) }    
       opts.on('-h', '--help')      { help }
       
