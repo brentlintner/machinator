@@ -95,5 +95,5 @@ end
 
 desc "Shows a quick coverage of tests."
 task :rcov do 
-  sh "rcov -T test/test_*.rb -I lib/*.rb"
+  sh "rcov -T tests/*.rb -I lib/machinator/*.rb"
 end
