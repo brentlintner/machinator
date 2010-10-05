@@ -14,8 +14,8 @@ module Machinator
       @obfuscator = Obfuscator.new
     end
     
-    def teardown
-    end
+#    def teardown
+#    end
     
     def test_neverspeak_should_die_when_given_nothing
       caught = false
@@ -29,40 +29,43 @@ module Machinator
     
     def test_neverspeak_returns_new_string_object
       str = "test"
-      assert_not_equal str.object_id, @obfuscator.neverspeak(str).object_id      
+      assert_not_equal str.object_id, @obfuscator.neverspeak(str, {"words" => {}}).object_id      
     end
     
     def test_neverspeak_should_obfuscate_a_string
-      result = @obfuscator.neverspeak("the ministry of war fights eastasia and loves eurasia.", {        
-        /fights\seastasia/ => "loves eastasia",          
-        /ministry\sof\swar/ => "ministry of love",          
-        /loves\seurasia/ => "fights eurasia"          
+      result = @obfuscator.neverspeak("the ministry of war fights eastasia and loves eurasia.", {
+        "words" => { 
+          /fights\seastasia/ => "loves eastasia",          
+          /ministry\sof\swar/ => "ministry of peace",          
+          /loves\seurasia/ => "fights eurasia"
+        }
       })
       
-      assert_equal result, "the ministry of love loves eastasia and fights eurasia."
+      assert_equal result, "the ministry of peace loves eastasia and fights eurasia."
     end
     
-    
-    def test_neverspeak_file_changes_file
+    def test_neverspeak_changes_file
       file_path = "test.txt"
       
       File.open(file_path, "w") do |aFile|
         aFile.syswrite("telescreen")
       end
       
-      @obfuscator.neverspeak_file(file_path, {
-        /telescreen/ => "watchscreen"  
+      @obfuscator.neverspeak(file_path, {
+        "words" => {
+          /telescreen/ => "watchscreen"
+        }
       })
       
-      file_buffer = ""
-      IO.foreach file_path do |line|
-        file_buffer += line
-      end
-      
-      assert_equal "watchscreen", file_buffer, "expected obfuscated file"
+      assert_equal "watchscreen", File.new(file_path).readline, "expected obfuscated file"
       
       File.delete(file_path)
     end
     
   end
+
+  def test_never_speak_obfuscates_file_names
+
+  end
+
 end

@@ -1,4 +1,6 @@
-Keep big brother distracted by obfuscating your code, file and folder names.
+Machinator can perform code obfuscation on file content and directory structures. 
+
+It can be paired up with high level language comrpession routines to keep even Big Brother guessing.
 
 http://rubygems.org/gems/machinator
 
@@ -6,24 +8,28 @@ http://rubygems.org/gems/machinator
 
 Machinator lets you define the schema for obfuscation. 
     
-A schema (in yaml) is defined in a .machinator file in the current directory. If no file is found then
-a valid yaml resource is expected.
-A schema has a string and a paths hash collection, with each key/pair being a regular expression and string to replace with any occurences, respectively.
+A schema (in YAML) is defined in a .machinator file in the current directory. If no file is found then
+a valid YAML or Hash resource is expected as the second optional argument.
+
+A schema has a words and a names hash collection, with each key/pair being a regular expression and strings to replace with any occurences, respectively.
 
 An example:
 
-    strings: {      
+    words: {      
         namepsace\.Foo: nameSpace.bar            
     }  
         
-    paths: {
+    names: {
         SomeFile\.js$: ABC.js
     }
-            
+           
+Any words are matched against the entire file. File names are obfuscated afterwards.
+ 
 == Using in code
 
     require "machinator"
-    test = Machinator::Obfuscator.new
+    winston = Machinator::Obfuscator.new
+    winston.neverspeak(source, schema)
 
 == Terminal usage
 
@@ -37,12 +43,10 @@ Or (with the source) you can just:
 
 == Dependencies
 
-None    
+None 
         
 == Tests
     
-You need mocha for mocking (using Test::Unit)
-
 ruby tests/machinator.rb
 
 == Author
