@@ -7,14 +7,20 @@ module Machinator
     
     def neverspeak(item=nil, schema=nil)
       if item.nil? || !(item.is_a?(String) || item.is_a?(File)) || schema.nil?
+        # look for a .machinator file
         raise Room101, "no valid resource specified" 
       end
 
       if item.is_a?(File) || File.exist?(item)
-        obfuscate_file(item, schema)
+        if !File.directory?(item)
+          obfuscate_file(item, schema["words"]) if schema["words"]
+        else
+          # obfuscate for every file in directory
+          obfuscate_file_name(item, schema["names"])
+        end
       else
         new_item = String.new(item)
-        mask(schema["words"], new_item)
+        mask(schema["words"], new_item) if schema["words"]
       end
 
       new_item
@@ -28,21 +34,26 @@ module Machinator
       }      
     end
 
-    def obfuscate_file(file_path, schema)
+    def obfuscate_file(file_path, words=nil)
       raise Room101, "invalid file to obfuscate" if !File.exists?(file_path)
+      
+      if words
+        file_buffer = ""
+        IO.foreach file_path do |line|
+          file_buffer += line
+        end
 
-      file_buffer = ""
-      IO.foreach file_path do |line|
-        file_buffer += line
-      end
+        mask(words, file_buffer)
 
-      File.open(file_path, "w") do |aFile|
-        mask(schema["words"], file_buffer)
-        aFile.syswrite(file_buffer)
+        File.open(file_path, "w") do |aFile|
+          aFile.syswrite(file_buffer)
+        end
       end
     end
     
-    #def obfuscate_path ; end
+    def obfuscate_file_name
+      
+    end
 
   end
 end

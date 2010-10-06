@@ -8,14 +8,19 @@ require 'mocha'
 require "#{lib}/machinator/obfuscator"
 
 module Machinator
+  THOUGHT = "thought"
+  POLICE = "police"
+
   class ObfuscatorTest < Test::Unit::TestCase
-  
+
     def setup
       @obfuscator = Obfuscator.new
     end
     
-#    def teardown
-#    end
+    def teardown
+      File.delete(POLICE) if File.exists?(POLICE)
+      File.delete(THOUGHT) if File.exists?(THOUGHT)
+    end
     
     def test_neverspeak_should_die_when_given_nothing
       caught = false
@@ -32,7 +37,7 @@ module Machinator
       assert_not_equal str.object_id, @obfuscator.neverspeak(str, {"words" => {}}).object_id      
     end
     
-    def test_neverspeak_should_obfuscate_a_string
+    def test_neverspeak_obfuscates_a_string
       result = @obfuscator.neverspeak("the ministry of war fights eastasia and loves eurasia.", {
         "words" => { 
           /fights\seastasia/ => "loves eastasia",          
@@ -44,8 +49,8 @@ module Machinator
       assert_equal result, "the ministry of peace loves eastasia and fights eurasia."
     end
     
-    def test_neverspeak_changes_file
-      file_path = "test.txt"
+    def test_neverspeak_obfuscates_file
+      file_path = THOUGHT
       
       File.open(file_path, "w") do |aFile|
         aFile.syswrite("telescreen")
@@ -62,9 +67,17 @@ module Machinator
       File.delete(file_path)
     end
     
-  end
+    def test_neverspeak_obfuscates_file_name
+      FileUtils.touch(THOUGHT)
 
-  def test_never_speak_obfuscates_file_names
+      @obfuscator.neverspeak(File.dirname(__FILE__), {
+        "names" => {
+          /thought$/ => POLICE
+        }
+      })
+      
+      assert File.exist?(POLICE) && !File.exist(THOUGHT), "expected obfuscated file name"
+    end
 
   end
 
