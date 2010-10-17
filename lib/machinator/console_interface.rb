@@ -1,8 +1,8 @@
 module Machinator
   class ConsoleInterface    
 
-VERSION_TEXT = 'Machinator v0.1'
-HELP = <<TEXT
+  VERSION_TEXT = 'v0.1'
+  HELP = <<TEXT
 
 == Machinator
   Keep big brother distracted by obfuscating your code, file and folder names.
@@ -16,12 +16,16 @@ HELP = <<TEXT
 
 TEXT
     
-    def initialize(argv)
-      @argv = argv
+    def initialize
+      @argv = nil
       @options = OpenStruct.new      
+    end
+   
+    def interpret(argv)
+      @argv = argv
       parsed_options?
     end
-    
+
     def options
       @options
     end
@@ -35,7 +39,7 @@ TEXT
       
       opts = OptionParser.new
             
-      opts.on('-v', '--version')   { log(VERSION_TEXT) ; exit!(0) }    
+      opts.on('-v', '--version')   { log(VERSION_TEXT) }    
       opts.on('-h', '--help')      { help }
       
       opts.on('-o', '--obfuscate [path]') do |path|
