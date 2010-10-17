@@ -1,5 +1,5 @@
 module Machinator
-  class Room101 < RuntimeError ; end
+  class Room101 < StandardError ; end
   require 'yaml'
   
   class Obfuscator  

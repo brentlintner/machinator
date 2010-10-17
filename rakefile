@@ -12,7 +12,7 @@ end
 
 desc "Runs all unit tests"
 task :test do
-  Dir.glob("tests/*.rb").each do |file|
+  Dir.glob("test/*.rb").each do |file|
     require file
   end
 end
@@ -60,7 +60,7 @@ task :stats do
 
   # Now do the test files
   total_lines = 0; total_codelines = 0; files = Hash.new
-  Dir.glob("tests/*.rb").each do |file_name| 
+  Dir.glob("test/*.rb").each do |file_name| 
     lines = 0; codelines = 0
 
     next unless file_name =~ /.*rb/
@@ -96,5 +96,5 @@ end
 
 desc "Shows a quick coverage of tests."
 task :rcov do 
-  sh "rcov -T tests/*.rb -I lib/machinator/*.rb"
+  sh "rcov -T test/*.rb -I lib/machinator/*.rb"
 end
