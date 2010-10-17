@@ -1,15 +1,24 @@
 Machinator can perform code obfuscation on file content and directory structures. 
 
-It can be paired up with high level language comrpession routines to keep even Big Brother guessing. Or can you?
+It can be paired up with high level language deployment and/or compression routines to keep even Big Brother guessing. Or can it?
 
 http://rubygems.org/gems/machinator
 
+== Terminal usage
+
+As a ruby gem
+
+    machinator -h
+  
+Or (with the source) you can just:
+
+    ruby bin/machinator -h
+
 == Obfuscating
 
-Machinator lets you define the schema for obfuscation. 
+Machinator lets you define the schema for obfuscation. Beware! Make sure you get everything right. 
     
-A schema (in YAML) is defined in a .machinator file in the current directory. If no file is found then
-a valid YAML or Hash resource is expected as the second optional argument.
+A schema (in YAML) is defined in a .machinator file in the current directory, or a manually specified Hash resource.
 
 A schema has a words and a names hash collection, with each key/pair being a regular expression and strings to replace with any occurences, respectively.
 
@@ -23,23 +32,30 @@ An example:
         SomeFile\.js$: ABC.js
     }
            
-Any words are matched against the entire file. File names are obfuscated afterwards.
+Any words are matched against the entire file. File names are obfuscated afterwards (will only be matched once).
  
-== Using in code
+== Using In Code 
 
     require "machinator"
     winston = Machinator::Obfuscator.new
     winston.neverspeak(source, schema)
 
-== Terminal usage
+The source can be an actual string to obfuscate, a File object, or a directory/file path to operate on.
+Keep in mind that the Obfuscator module will overwrite any files/directories that matches the schema. 
 
-As a ruby gem
+Note: If you specify a string to obfusctate that is actually a valid file/directory path it will operate on that instead.
 
-    machinator -h
-  
-Or (with the source) you can just:
+== Manipulating Strings
 
-    ruby bin/machinator -h
+In the case of passing in a string an obfuscated copy will be returned.
+
+    new_string = winston.neverspeak("some string to obfuscate", { 
+      "words" => {
+        /^some\sstring/ => "something"
+      }
+    })
+
+== Operating on Files and Directories
 
 == Dependencies
 
@@ -47,7 +63,7 @@ None
         
 == Tests
     
-ruby tests/machinator.rb
+rake test (or ruby test/*.rb)
 
 == Author
     

@@ -4,22 +4,22 @@ $:.unshift(lib) if File.exists?(lib) unless $:.member?(lib)
 require 'rubygems'
 require 'fileutils'
 require 'test/unit'
-require 'mocha'
 require "#{lib}/machinator/obfuscator"
 
 module Machinator
-  THOUGHT = "thought"
-  POLICE = "police"
+  OCEANIA = "the_absolute"
+  THOUGHT = "the_absolute/thought"
+  POLICE = "the_absolute/police"
 
   class ObfuscatorTest < Test::Unit::TestCase
 
     def setup
       @obfuscator = Obfuscator.new
+      FileUtils.mkdir(OCEANIA)
     end
     
     def teardown
-      File.delete(POLICE) if File.exists?(POLICE)
-      File.delete(THOUGHT) if File.exists?(THOUGHT)
+      FileUtils.remove_dir(OCEANIA, true)
     end
     
     def test_neverspeak_should_die_when_given_nothing
@@ -33,7 +33,7 @@ module Machinator
     end
     
     def test_neverspeak_returns_new_string_object
-      str = "test"
+      str = "some test string"
       assert_not_equal str.object_id, @obfuscator.neverspeak(str, {"words" => {}}).object_id      
     end
     
@@ -63,14 +63,12 @@ module Machinator
       })
       
       assert_equal "watchscreen", File.new(file_path).readline, "expected obfuscated file"
-      
-      File.delete(file_path)
     end
     
     def test_neverspeak_obfuscates_file_name
       FileUtils.touch(THOUGHT)
 
-      @obfuscator.neverspeak(File.dirname(__FILE__), {
+      @obfuscator.neverspeak(OCEANIA, {
         "names" => {
           /thought$/ => POLICE
         }
@@ -79,6 +77,25 @@ module Machinator
       assert File.exist?(POLICE) && !File.exist(THOUGHT), "expected obfuscated file name"
     end
 
-  end
+    def test_neverspeak_obfuscates_file_name_and_content
+      file_path = THOUGHT
+      
+      File.open(file_path, "w") do |aFile|
+        aFile.syswrite("love conquers all")
+      end
 
+      @obfuscator.neverspeak(OCEANIA, {
+        "words" => {
+          /conquers\sall/ => "big brother"
+        },
+        "names" => {
+          /thought$/ => POLICE
+        }
+      })
+      
+      assert_equal "love big brother", File.new(THOUGHT).readline, "expected obfuscated file"
+      assert File.exist?(POLICE) && !File.exist(THOUGHT), "expected obfuscated file name"
+    end
+
+  end
 end
