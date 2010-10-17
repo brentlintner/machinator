@@ -14,7 +14,7 @@ module Machinator
   class ObfuscatorTest < Test::Unit::TestCase
 
     def setup
-      @obfuscator = Obfuscator.new
+      @winston = Obfuscator.new
       FileUtils.mkdir(OCEANIA)
     end
     
@@ -25,7 +25,7 @@ module Machinator
     def test_neverspeak_should_die_when_given_nothing
       caught = false
       begin
-        @obfuscator.neverspeak
+        @winston.neverspeak
       rescue Room101 => e
         caught = true
       end
@@ -34,11 +34,11 @@ module Machinator
     
     def test_neverspeak_returns_new_string_object
       str = "some test string"
-      assert_not_equal str.object_id, @obfuscator.neverspeak(str, {"words" => {}}).object_id      
+      assert_not_equal str.object_id, @winston.neverspeak(str, {"words" => {}}).object_id      
     end
     
     def test_neverspeak_obfuscates_a_string
-      result = @obfuscator.neverspeak("the ministry of war fights eastasia and loves eurasia.", {
+      result = @winston.neverspeak("the ministry of war fights eastasia and loves eurasia.", {
         "words" => { 
           /fights\seastasia/ => "loves eastasia",          
           /ministry\sof\swar/ => "ministry of peace",          
@@ -56,7 +56,7 @@ module Machinator
         aFile.syswrite("telescreen")
       end
       
-      @obfuscator.neverspeak(file_path, {
+      @winston.neverspeak(file_path, {
         "words" => {
           /telescreen/ => "watchscreen"
         }
@@ -68,7 +68,7 @@ module Machinator
     def test_neverspeak_obfuscates_file_name
       FileUtils.touch(THOUGHT)
 
-      @obfuscator.neverspeak(OCEANIA, {
+      @winston.neverspeak(OCEANIA, {
         "names" => {
           /thought$/ => POLICE
         }
@@ -84,7 +84,7 @@ module Machinator
         aFile.syswrite("love conquers all")
       end
 
-      @obfuscator.neverspeak(OCEANIA, {
+      @winston.neverspeak(OCEANIA, {
         "words" => {
           /conquers\sall/ => "big brother"
         },
