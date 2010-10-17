@@ -75,6 +75,7 @@ module Machinator
         recurse(source) do |full_path|
           if !File.directory?(full_path)
             obfuscate_file(full_path)
+            obfuscate_file_name(full_path)
           end
         end
       end

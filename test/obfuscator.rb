@@ -70,11 +70,11 @@ module Machinator
 
       @winston.neverspeak(OCEANIA, {
         "names" => {
-          /thought$/ => POLICE
+          /#{THOUGHT}$/ => POLICE
         }
       })
       
-      assert File.exist?(POLICE) && !File.exist(THOUGHT), "expected obfuscated file name"
+      assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
     end
 
     def test_neverspeak_obfuscates_file_name_and_content
@@ -89,12 +89,12 @@ module Machinator
           /conquers\sall/ => "big brother"
         },
         "names" => {
-          /thought$/ => POLICE
+          /#{THOUGHT}$/ => POLICE
         }
       })
       
-      assert_equal "love big brother", File.new(THOUGHT).readline, "expected obfuscated file"
-      assert File.exist?(POLICE) && !File.exist(THOUGHT), "expected obfuscated file name"
+      assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
+      assert_equal "love big brother", File.new(POLICE).readline, "expected obfuscated file"
     end
 
   end
