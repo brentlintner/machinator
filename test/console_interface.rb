@@ -19,12 +19,12 @@ module Machinator
     end
 
     def test_responds_to_help
-      ConsoleInterface.any_instance.expects(:help).once
+      ConsoleInterface.any_instance.expects(:peace_out).with(is_a(String)).once
       @interface.interpret(["-h"])
     end
 
     def test_responds_to_version
-      ConsoleInterface.any_instance.expects(:log).with(is_a(String)).once
+      ConsoleInterface.any_instance.expects(:peace_out).with(is_a(String)).once
       @interface.interpret(["-v"])
     end
   end

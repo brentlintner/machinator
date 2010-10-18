@@ -30,17 +30,17 @@ TEXT
       @options
     end
 
-    def help
-      log(HELP) ; exit!(0)
+    def peace_out(msg)
+      log(msg) ; exit!(0)
     end
-    
+
     def parsed_options?
       @options.verbose = false
       
       opts = OptionParser.new
             
-      opts.on('-v', '--version')   { log(VERSION_TEXT) }    
-      opts.on('-h', '--help')      { help }
+      opts.on('-v', '--version')   { peace_out(VERSION_TEXT) }    
+      opts.on('-h', '--help')      { peace_out(HELP) }
       
       opts.on('-o', '--obfuscate [path]') do |path|
       end
