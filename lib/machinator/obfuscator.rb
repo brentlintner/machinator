@@ -23,7 +23,6 @@ module Machinator
           obfuscate_file
           obfuscate_file_name
         else
-          # obfuscate for every file in directory
           obfuscate_dir
         end
       else
@@ -75,22 +74,24 @@ module Machinator
         recurse(source) do |full_path|
           if !File.directory?(full_path)
             obfuscate_file(full_path)
-            obfuscate_file_name(full_path)
           end
+          obfuscate_file_name(full_path)
         end
       end
     end
     
     def recurse(dir, limit=20, &block)
       raise Room101, "recursive limit (20) reached" if limit <= 0
-      yield(dir)
       Dir.foreach(dir) do |dir_item|
         full_path = File.join(dir, dir_item)
         if dir_item !~ /^\.\.?$/
+          if File.directory?(full_path) 
+            recurse(full_path, limit - 1, &block)
+          end
           yield(full_path) 
-          File.directory?(full_path) ? recurse(full_path, limit - 1, &block) : return
         end
       end
+      yield(dir)
     end 
 
   end

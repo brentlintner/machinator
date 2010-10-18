@@ -97,5 +97,19 @@ module Machinator
       assert_equal "love big brother", File.new(POLICE).readline, "expected obfuscated file"
     end
 
+    def test_neverspeak_obfuscates_directory_name
+      FileUtils.mkdir(THOUGHT)
+
+      @winston.neverspeak(THOUGHT, {
+        "names" => {
+          /#{THOUGHT}$/ => POLICE
+        }
+      })
+      
+      assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
+    end
+
+    # TODO:
+    # test for multi level dirs, running multiple obfuscations, bottom up approach verification
   end
 end
