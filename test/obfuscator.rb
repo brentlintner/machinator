@@ -29,7 +29,7 @@ module Machinator
       rescue Room101 => e
         caught = true
       end
-      assert_equal caught, true, "expected a TypeError"
+      assert_equal caught, true, "expected Room101"
     end
     
     def test_neverspeak_returns_new_string_object
@@ -106,7 +106,7 @@ module Machinator
         }
       })
       
-      assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
+      assert File.exist?(POLICE) && File.directory?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
     end
 
     # TODO:
