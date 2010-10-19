@@ -50,19 +50,17 @@ module Machinator
     end
     
     def test_neverspeak_obfuscates_file
-      file_path = THOUGHT
-      
-      File.open(file_path, "w") do |aFile|
+      File.open(THOUGHT, "w") do |aFile|
         aFile.syswrite("telescreen")
       end
       
-      @winston.neverspeak(file_path, {
+      @winston.neverspeak(THOUGHT, {
         "words" => {
           /telescreen/ => "watchscreen"
         }
       })
       
-      assert_equal "watchscreen", File.new(file_path).readline, "expected obfuscated file"
+      assert_equal "watchscreen", File.new(THOUGHT).readline, "expected obfuscated file"
     end
     
     def test_neverspeak_obfuscates_file_name
@@ -78,9 +76,7 @@ module Machinator
     end
 
     def test_neverspeak_obfuscates_file_name_and_content
-      file_path = THOUGHT
-      
-      File.open(file_path, "w") do |aFile|
+      File.open(THOUGHT, "w") do |aFile|
         aFile.syswrite("love conquers all")
       end
 
