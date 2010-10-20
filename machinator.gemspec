@@ -15,8 +15,8 @@ Gem::Specification.new do |s|
   s.files = Dir['bin/*', 'machinator.gemspec', 'README.rdoc', 'lib/*'].to_a
 
   s.has_rdoc         = true
-  s.extra_rdoc_files = %w( README )
-  s.rdoc_options.concat ['--main',  'README']
+  s.extra_rdoc_files = %w( README.rdoc )
+  s.rdoc_options.concat ['--main',  'README.rdoc']
 
   s.executables = ["machinator"]
   s.require_path = "lib"
