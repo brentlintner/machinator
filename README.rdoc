@@ -16,7 +16,7 @@ Or (with the source) you can just:
 
 == Obfuscating
 
-Machinator lets you define the schema for obfuscation. Beware! Make sure you get everything right. 
+Machinator lets you define the schema for obfuscation. Beware! Make sure you get everything right.
     
 A schema (in YAML) is defined in a .machinator file in the current directory, or a manually specified Hash resource.
 
@@ -56,6 +56,23 @@ In the case of passing in a string an obfuscated copy will be returned.
     })
 
 == Operating on Files and Directories
+
+You can operate on a single file, where the first matched names key/pair is applied to the file name and any words are applied against the file content.
+
+    winston.neverspeak("foo.bar", {
+      "names" => {
+        /bar$/ => "foo" 
+      }
+    })
+
+If you specify a directory all files and directories inside will be operated on (recursively, bottom up), applying names/words matches to each file.
+
+    // let somedir has 'afile' in it
+    winston.neverspeak("somedir", {
+      "names" => {
+        /afile$/ => "thefile" 
+      }
+    })
 
 == Dependencies
 
