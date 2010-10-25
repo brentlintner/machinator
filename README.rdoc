@@ -16,7 +16,7 @@ Or (with the source) you can just:
 
 == Obfuscating
 
-Machinator lets you define the schema for obfuscation. Beware! Make sure you get everything right.
+Machinator lets you define the schema for obfuscation.
     
 A schema (in YAML) is defined in a .machinator file in the current directory, or a manually specified Hash resource.
 
@@ -74,6 +74,8 @@ If you specify a directory all files and directories inside will be operated on 
         /afile$/ => "thefile" 
       }
     })
+
+Note: This will recurse (fairly deep) so make sure the passed in directory is correct, or you could possibly bring on the apocalypse.
 
 == Dependencies
 

@@ -1,11 +1,11 @@
 module Machinator
-  require 'ostruct'
-  require 'optparse'
-
   class ConsoleInterface    
 
-  VERSION_TEXT = 'v0.1'
-  HELP = <<TEXT
+    require 'ostruct'
+    require 'optparse'
+
+    VERSION_TEXT = 'v0.1'
+    HELP = <<TEXT
 
 == Machinator
   Keep big brother distracted by obfuscating your code, file and folder names.

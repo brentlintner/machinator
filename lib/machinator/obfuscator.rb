@@ -1,16 +1,17 @@
 module Machinator
-  require 'yaml'
-  
   class Room101 < StandardError ; end
-  NAMES, WORDS = "names", "words"
-
   class Obfuscator  
+    require 'yaml'
+    
+    NAMES, WORDS = "names", "words"
+
     def initialize
       @source, @schema = nil, nil
     end
     
     def neverspeak(source=nil, schema=nil)
-      if source.nil? || !(source.is_a?(String) || source.is_a?(File)) || schema.nil?
+      if source.nil? || schema.nil? ||
+          !((source.is_a?(String) && source != "") || source.is_a?(File))
         # look for a .machinator file
         raise Room101, "no valid resource specified" 
       end
@@ -44,14 +45,11 @@ module Machinator
 
     def obfuscate_file(source=@source)
       raise Room101, "invalid file to obfuscate" if !File.exists?(@source)
-      
       file_buffer = ""
       IO.foreach source do |line|
         file_buffer += line
       end
-
       obfuscate_string(file_buffer)
-
       File.open(source, "w") do |aFile|
         aFile.syswrite(file_buffer)
       end
@@ -70,20 +68,19 @@ module Machinator
     end
 
     def obfuscate_dir(source=@source)
-      if @schema[NAMES].is_a?(Hash)
-        recurse(source) do |full_path|
-          if !File.directory?(full_path)
-            obfuscate_file(full_path)
-          end
-          obfuscate_file_name(full_path)
+      recurse(source) do |full_path|
+        if !File.directory?(full_path)
+          obfuscate_file(full_path)
         end
+        obfuscate_file_name(full_path)
       end
     end
     
     def recurse(dir, limit=20, &block)
       raise Room101, "recursive limit (20) reached" if limit <= 0
-      Dir.foreach(dir) do |dir_item|
-        full_path = File.join(dir, dir_item)
+      dir_path = dir.is_a?(File) ? dir.path : dir
+      Dir.foreach(dir_path) do |dir_item|
+        full_path = File.join(dir_path, dir_item)
         if dir_item !~ /^\.\.?$/
           if File.directory?(full_path) 
             recurse(full_path, limit - 1, &block)
@@ -91,7 +88,7 @@ module Machinator
           yield(full_path) 
         end
       end
-      yield(dir)
+      yield(dir_path)
     end 
 
   end
