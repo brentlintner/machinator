@@ -59,6 +59,7 @@ In the case of passing in a string an obfuscated copy will be returned.
 
 You can operate on a single file, where the first matched names key/pair is applied to the file name and any words are applied against the file content.
 
+    # renames to foo.foo
     winston.neverspeak("foo.bar", {
       "names" => {
         /bar$/ => "foo" 
@@ -67,7 +68,7 @@ You can operate on a single file, where the first matched names key/pair is appl
 
 If you specify a directory all files and directories inside will be operated on (recursively, bottom up), applying names/words matches to each file.
 
-    // let somedir has 'afile' in it
+    # let somedir have 'afile' in it
     winston.neverspeak("somedir", {
       "names" => {
         /afile$/ => "thefile" 
@@ -80,7 +81,7 @@ None
         
 == Tests
     
-rake test (or ruby test/*.rb)
+rake test (need mocha, and rake... if you want)
 
 == Author
     
