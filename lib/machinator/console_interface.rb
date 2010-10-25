@@ -1,4 +1,7 @@
 module Machinator
+  require 'ostruct'
+  require 'optparse'
+
   class ConsoleInterface    
 
   VERSION_TEXT = 'v0.1'
