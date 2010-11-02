@@ -3,7 +3,6 @@ require "rake/clean"
 
 CLEAN.include("doc")
 CLEAN.include("coverage")
-SRC = FileList['lib/*', 'lib/machinator/*']
 
 desc "Creates documentation for the project"
 task :doc do
@@ -13,7 +12,7 @@ end
 desc "Runs all unit tests"
 task :test do
   Dir.glob("test/*.rb").each do |file|
-    require file
+    require File.expand_path(file)
   end
 end
 

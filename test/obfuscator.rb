@@ -1,10 +1,7 @@
-lib = File.join(File.dirname(__FILE__), %w(.. lib))
-$:.unshift(lib) if File.exists?(lib) unless $:.member?(lib)
-
 require 'rubygems'
 require 'fileutils'
 require 'test/unit'
-require "#{lib}/machinator/obfuscator"
+require File.expand_path("../../lib/machinator/obfuscator", __FILE__)
 
 module Machinator
   OCEANIA = "the_absolute"

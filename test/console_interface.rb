@@ -1,12 +1,9 @@
-lib = File.join(File.dirname(__FILE__), %w(.. lib))
-$:.unshift(lib) if File.exists?(lib) unless $:.member?(lib)
-
 require 'rubygems'
 require 'fileutils'
 require 'test/unit'
 require 'mocha'
-require "#{lib}/machinator/obfuscator"
-require "#{lib}/machinator/console_interface"
+require File.expand_path("../../lib/machinator/obfuscator", __FILE__)
+require File.expand_path("../../lib/machinator/console_interface", __FILE__)
 
 module Machinator
   class ConsoleInterfaceTest < Test::Unit::TestCase

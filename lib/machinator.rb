@@ -1,4 +1,2 @@
-lib = File.join(File.dirname(__FILE__), "machinator")
-
-require File.join(lib, 'console_interface')
-require File.join(lib, 'obfuscator')
+require File.expand_path('console_interface', __FILE__)
+require File.expand_path('obfuscator', __FILE__)
