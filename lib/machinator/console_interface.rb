@@ -1,14 +1,13 @@
 module Machinator
   class ConsoleInterface    
-
     require 'ostruct'
     require 'optparse'
 
-    VERSION_TEXT = 'v0.1'
+    VERSION_TEXT = '0.1'
     HELP = <<TEXT
 
 == Machinator
-  Keep big brother distracted by obfuscating your code, file and folder names.
+  obfuscate file content and directory structures
 
 == Usage
   machinator [options]
@@ -20,7 +19,6 @@ module Machinator
 TEXT
     
     def initialize
-      @argv = nil
       @options = OpenStruct.new      
     end
    
@@ -29,12 +27,8 @@ TEXT
       parsed_options?
     end
 
-    def options
-      @options
-    end
-
     def peace_out(msg)
-      log(msg) ; exit!(0)
+      puts(msg) ; exit!(0)
     end
 
     def parsed_options?
@@ -44,32 +38,21 @@ TEXT
             
       opts.on('-v', '--version')   { peace_out(VERSION_TEXT) }    
       opts.on('-h', '--help')      { peace_out(HELP) }
-      
-      opts.on('-o', '--obfuscate [path]') do |path|
-      end
+      opts.on('-o', '--obfuscate [path]') { |path| }
 
       begin
         opts.parse!(@argv)
       rescue Exception => e
         handle_exception(e) ; exit!(0)
       end
-    
-      process_options
       
       true
     end
     
-    def process_options ; end
-
-    def log(msg)
-      puts(msg)
-    end
-    
     def handle_exception(e)            
-      log("\nshit pooped!\n\n")
-      log "#{e.class.to_s} ==> #{e.message}\n\n"
-      log e.backtrace.join("\n")
+      puts("\nshit pooped!\n\n")
+      puts "#{e.class.to_s} ==> #{e.message}\n\n"
+      puts e.backtrace.join("\n")
     end
-    
   end
 end

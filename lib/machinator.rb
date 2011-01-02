@@ -1,2 +1,3 @@
-require File.expand_path('console_interface', __FILE__)
-require File.expand_path('obfuscator', __FILE__)
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+require 'machinator/console_interface'
+require 'machinator/obfuscator'

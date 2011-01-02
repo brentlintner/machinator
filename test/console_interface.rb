@@ -24,5 +24,8 @@ module Machinator
       ConsoleInterface.any_instance.expects(:peace_out).with(is_a(String)).once
       @interface.interpret(["-v"])
     end
+
+    # TODO
+    # add options for command line obfuscation
   end
 end 

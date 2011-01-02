@@ -77,6 +77,14 @@ If you specify a directory all files and directories inside will be operated on 
 
 Note: This will recurse (fairly deep) so make sure the passed in directory is correct, or you could possibly bring on the apocalypse.
 
+== Filtering
+
+You can pass in a block to filer file operations (both words and names).
+
+    winston.neverspeak("somedir", schema) { |path| 
+      true
+    } # will operate on every file found
+
 == Dependencies
 
 None 
@@ -84,6 +92,11 @@ None
 == Tests
     
 rake test (need mocha, and rake... if you want)
+
+== TODO
+
+support .machinator file
+
 
 == Author
     
