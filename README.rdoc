@@ -93,11 +93,6 @@ None
     
 rake test (need mocha, and rake... if you want)
 
-== TODO
-
-support .machinator file
-
-
 == Author
     
 Copyright 2010 Brent Lintner
