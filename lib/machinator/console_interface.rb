@@ -3,7 +3,7 @@ module Machinator
     require 'ostruct'
     require 'optparse'
 
-    VERSION_TEXT = '0.1'
+    VERSION_TEXT = '0.1.1'
     HELP = <<TEXT
 
 == Machinator
