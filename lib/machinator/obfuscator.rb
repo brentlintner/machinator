@@ -13,7 +13,7 @@ module Machinator
       @block = block
 
       if @schema.nil?
-        config = File.join(@source, ".machinator")
+        config = File.join(File.directory?(@source) ? @source : File.dirname(@source), ".machinator")
         if !File.exists?(config)
           raise Room101, "no schema specified and no .machinator file was found."
         end

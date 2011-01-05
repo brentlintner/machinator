@@ -174,6 +174,28 @@ module Machinator
       assert_equal "there is no hope in the proles", File.new(POLICE).readline, "expected obfuscated file"
     end
 
+    def test_reads_local_schema_file_when_operating_on_file
+      File.open(CONFIG, "w") do |file|
+        file.syswrite(YAML::dump({
+          "words" => {
+            "is\shope" => "is no hope" 
+          },
+          "names" => {
+            /#{THOUGHT}$/ => POLICE
+          }
+        }))
+      end
+
+      File.open(THOUGHT, "w") do |file|
+        file.syswrite("is hope")
+      end
+      
+      @winston.neverspeak(THOUGHT)
+
+      assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
+      assert_equal "is no hope", File.new(POLICE).readline, "expected obfuscated file"
+    end
+
     def test_can_filter_file_via_block
       File.open(THOUGHT, "w") do |file|
         file.syswrite("take me")
