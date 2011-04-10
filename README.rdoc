@@ -79,7 +79,7 @@ Note: This will recurse (fairly deep) so make sure the passed in directory is co
 
 == Filtering
 
-You can pass in a block to filer file operations (both words and names).
+You can pass in a block to filter file operations (both words and names).
 
     winston.neverspeak("somedir", schema) { |path| 
       true
