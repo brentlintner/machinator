@@ -1,4 +1,4 @@
-Machinator can perform code obfuscation on file content and directory structures. 
+Machinator can perform code obfuscation on file content and directory structures.
 
 It can be paired up with high level language deployment and/or compression routines to keep even Big Brother guessing. Or can it?
 
@@ -9,7 +9,7 @@ http://rubygems.org/gems/machinator
 As a ruby gem
 
     machinator -h
-  
+
 Or (with the source) you can just:
 
     ruby bin/machinator -h
@@ -17,31 +17,31 @@ Or (with the source) you can just:
 == Obfuscating
 
 Machinator lets you define the schema for obfuscation.
-    
+
 A schema (in YAML) is defined in a .machinator file in the directory being operated on, or a manually specified Hash resource.
 
 A schema has a words and a names hash collection, with each key/pair being a regular expression and strings to replace with any occurences, respectively.
 
 An example:
 
-    words: {      
-        namepsace\.Foo: nameSpace.bar            
-    }  
-        
+    words: {
+        namepsace\.Foo: nameSpace.bar
+    }
+
     names: {
         SomeFile\.js$: ABC.js
     }
-           
+
 Any words are matched against the entire file. File names are obfuscated afterwards (will only be matched once).
- 
-== Using In Code 
+
+== Using In Code
 
     require "machinator"
     winston = Machinator::Obfuscator.new
     winston.neverspeak(source, schema)
 
 The source can be an actual string to obfuscate, a File object, or a directory/file path to operate on.
-Keep in mind that the Obfuscator module will overwrite any files/directories that matches the schema. 
+Keep in mind that the Obfuscator module will overwrite any files/directories that matches the schema.
 
 Note: If you specify a string to obfusctate that is actually a valid file/directory path it will operate on that instead.
 
@@ -49,7 +49,7 @@ Note: If you specify a string to obfusctate that is actually a valid file/direct
 
 In the case of passing in a string an obfuscated copy will be returned.
 
-    new_string = winston.neverspeak("some string to obfuscate", { 
+    new_string = winston.neverspeak("some string to obfuscate", {
       "words" => {
         /^some\sstring/ => "something"
       }
@@ -62,7 +62,7 @@ You can operate on a single file, where the first matched names key/pair is appl
     # renames to foo.foo
     winston.neverspeak("foo.bar", {
       "names" => {
-        /bar$/ => "foo" 
+        /bar$/ => "foo"
       }
     })
 
@@ -71,7 +71,7 @@ If you specify a directory all files and directories inside will be operated on 
     # let somedir have 'afile' in it
     winston.neverspeak("somedir", {
       "names" => {
-        /afile$/ => "thefile" 
+        /afile$/ => "thefile"
       }
     })
 
@@ -81,20 +81,20 @@ Note: This will recurse (fairly deep) so make sure the passed in directory is co
 
 You can pass in a block to filter file operations (both words and names).
 
-    winston.neverspeak("somedir", schema) { |path| 
+    winston.neverspeak("somedir", schema) { |path|
       true
     } # will operate on every file found
 
 == Dependencies
 
-None 
-        
+None
+
 == Tests
-    
+
 rake test (need mocha, and rake... if you want)
 
 == Author
-    
+
 Copyright 2010 Brent Lintner
 
 The MIT License

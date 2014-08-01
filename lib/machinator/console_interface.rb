@@ -1,5 +1,5 @@
 module Machinator
-  class ConsoleInterface    
+  class ConsoleInterface
     require 'ostruct'
     require 'optparse'
 
@@ -17,11 +17,11 @@ module Machinator
   -v,   --version            Displays the version
 
 TEXT
-    
+
     def initialize
-      @options = OpenStruct.new      
+      @options = OpenStruct.new
     end
-   
+
     def interpret(argv)
       @argv = argv
       parsed_options?
@@ -33,10 +33,10 @@ TEXT
 
     def parsed_options?
       @options.verbose = false
-      
+
       opts = OptionParser.new
-            
-      opts.on('-v', '--version')   { peace_out(VERSION_TEXT) }    
+
+      opts.on('-v', '--version')   { peace_out(VERSION_TEXT) }
       opts.on('-h', '--help')      { peace_out(HELP) }
       opts.on('-o', '--obfuscate [path]') { |path| }
 
@@ -45,11 +45,11 @@ TEXT
       rescue Exception => e
         handle_exception(e) ; exit!(0)
       end
-      
+
       true
     end
-    
-    def handle_exception(e)            
+
+    def handle_exception(e)
       puts("\nshit pooped!\n\n")
       puts "#{e.class.to_s} ==> #{e.message}\n\n"
       puts e.backtrace.join("\n")

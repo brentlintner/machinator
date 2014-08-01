@@ -11,7 +11,7 @@ module Machinator
     def setup
       @interface = ConsoleInterface.new
     end
-    
+
     def teardown
     end
 
@@ -28,4 +28,4 @@ module Machinator
     # TODO
     # add options for command line obfuscation
   end
-end 
+end

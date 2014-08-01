@@ -1,12 +1,12 @@
 module Machinator
   class Room101 < StandardError ; end
-  class Obfuscator  
+  class Obfuscator
     require 'yaml'
 
     def initialize
       @block, @source, @schema = nil
     end
-    
+
     def neverspeak(source, schema=nil, &block)
       @schema = schema
       @source = source
@@ -19,7 +19,7 @@ module Machinator
         end
         @schema = YAML::load(File.open(config))
       end
- 
+
       if @source.is_a?(File) || File.exist?(@source)
         if !File.directory?(@source)
           if !@block || @block.call(source)
@@ -35,7 +35,7 @@ module Machinator
         return @source
       end
     end
-    
+
     protected
 
     def obfuscate_string(source=@source)
@@ -51,7 +51,7 @@ module Machinator
       obfuscate_string(file_buffer)
       File.open(source, "w") { |file| file.syswrite(file_buffer) }
     end
-   
+
     def obfuscate_file_name(source=@source)
       @schema["names"].each { |key, value|
         if (regex = Regexp.new(key)) =~ source
@@ -68,20 +68,20 @@ module Machinator
         end
       }
     end
-    
+
     def recurse(dir, limit=20, &block)
       raise Room101, "recursive limit (20) reached" if limit <= 0
       actual_path = dir.is_a?(File) ? dir.path : dir
       Dir.foreach(actual_path) { |item|
         full_path = File.join(actual_path, item)
         if item !~ /^\.\.?$/
-          if File.directory?(full_path) 
+          if File.directory?(full_path)
             recurse(full_path, limit - 1, &block)
           end
-          yield(full_path) 
+          yield(full_path)
         end
       }
       yield(actual_path)
-    end 
+    end
   end
 end

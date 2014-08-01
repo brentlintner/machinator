@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.name = 'machinator'
   s.version = '0.1.1'
-  s.summary = 'obfuscate file content and directory structures.'
-  s.description = 'obfuscate file content and directory structures'
+  s.summary = 'Obfuscate file content and directory structures.'
+  s.description = 'Obfuscate file content and directory structures'
 
   s.required_ruby_version = '>= 1.8.6'
 

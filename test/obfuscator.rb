@@ -16,20 +16,20 @@ module Machinator
       @winston = Obfuscator.new
       FileUtils.mkdir(OCEANIA)
     end
-    
+
     def teardown
       FileUtils.remove_dir(OCEANIA, true)
     end
-    
+
     def test_should_die_when_given_nothing
       caught = false
-      
+
       begin
         @winston.neverspeak
       rescue ArgumentError => e
         caught = true
       end
-      
+
       assert_equal caught, true, "expected ArgumentError"
     end
 
@@ -52,38 +52,38 @@ module Machinator
     def test_should_return_empty_string_when_given_one
       assert_equal @winston.neverspeak("", {}), "", "expected empty string"
     end
-    
+
     def test_returns_new_string_object
       str = "some test string"
-      assert_not_equal str.object_id, @winston.neverspeak(str, {"words" => {}}).object_id      
+      assert_not_equal str.object_id, @winston.neverspeak(str, {"words" => {}}).object_id
     end
-    
+
     def test_obfuscates_a_string
       result = @winston.neverspeak("the ministry of war fights eastasia and loves eurasia.", {
-        "words" => { 
-          /fights\seastasia/ => "loves eastasia",          
-          /ministry\sof\swar/ => "ministry of peace",          
+        "words" => {
+          /fights\seastasia/ => "loves eastasia",
+          /ministry\sof\swar/ => "ministry of peace",
           /loves\seurasia/ => "fights eurasia"
         }
       })
-      
+
       assert_equal result, "the ministry of peace loves eastasia and fights eurasia."
     end
-    
+
     def test_obfuscates_file
       File.open(THOUGHT, "w") do |file|
         file.syswrite("telescreen")
       end
-      
+
       @winston.neverspeak(THOUGHT, {
         "words" => {
           /telescreen/ => "watchscreen"
         }
       })
-      
+
       assert_equal "watchscreen", File.new(THOUGHT).readline, "expected obfuscated file"
     end
-    
+
     def test_obfuscates_file_name
       FileUtils.touch(THOUGHT)
 
@@ -92,7 +92,7 @@ module Machinator
           /#{THOUGHT}$/ => POLICE
         }
       })
-      
+
       assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
     end
 
@@ -106,7 +106,7 @@ module Machinator
           /will\snever\sfind/ => "watch"
         }
       })
-      
+
       assert_equal "they watch us", File.new(POLICE).readline, "expected obfuscated file content"
     end
 
@@ -123,7 +123,7 @@ module Machinator
           /#{THOUGHT}$/ => POLICE
         }
       })
-      
+
       assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
       assert_equal "love big brother", File.new(POLICE).readline, "expected obfuscated file"
     end
@@ -136,7 +136,7 @@ module Machinator
           /#{THOUGHT}$/ => POLICE
         }
       })
-      
+
       assert File.exist?(POLICE) && File.directory?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
     end
 
@@ -148,7 +148,7 @@ module Machinator
           /#{THOUGHT}$/ => POLICE
         }
       })
-      
+
       assert File.exist?(POLICE) && File.directory?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
     end
 
@@ -156,7 +156,7 @@ module Machinator
       File.open(CONFIG, "w") do |file|
         file.syswrite(YAML::dump({
           "words" => {
-            "is\shope" => "is no hope" 
+            "is\shope" => "is no hope"
           },
           "names" => {
             /#{THOUGHT}$/ => POLICE
@@ -178,7 +178,7 @@ module Machinator
       File.open(CONFIG, "w") do |file|
         file.syswrite(YAML::dump({
           "words" => {
-            "is\shope" => "is no hope" 
+            "is\shope" => "is no hope"
           },
           "names" => {
             /#{THOUGHT}$/ => POLICE
@@ -189,7 +189,7 @@ module Machinator
       File.open(THOUGHT, "w") do |file|
         file.syswrite("is hope")
       end
-      
+
       @winston.neverspeak(THOUGHT)
 
       assert File.exist?(POLICE) && !File.exist?(THOUGHT), "expected obfuscated file name"
@@ -200,12 +200,12 @@ module Machinator
       File.open(THOUGHT, "w") do |file|
         file.syswrite("take me")
       end
-      
+
       @winston.neverspeak(THOUGHT, {
         "words" => {
           /take\sme/ => "take her"
         }
-      }) { |path| 
+      }) { |path|
         path !~ /#{THOUGHT}$/
       }
 
@@ -219,7 +219,7 @@ module Machinator
         "names" => {
           /#{THOUGHT}$/ => POLICE
         }
-      }) { |path| 
+      }) { |path|
         path !~ /#{THOUGHT}$/
       }
 
@@ -244,7 +244,7 @@ module Machinator
           /#{THOUGHT}$/ => "#{POLICE}"
         }
       }) { |path|
-        path =~ /#{POLICE}$/ 
+        path =~ /#{POLICE}$/
       }
 
       assert File.exist?(POLICE) && File.exist?(THOUGHT), "expected non-obfuscated file names"
