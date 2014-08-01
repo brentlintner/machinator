@@ -1,5 +1,7 @@
 == Machinator
 
+{<img src="https://badge.fury.io/rb/machinator.svg" alt="Gem Version" />}[http://badge.fury.io/rb/machinator]
+
 Machinator can perform code obfuscation on file content and directory structures.
 
 It can be paired up with high level language deployment and/or compression routines to keep even Big Brother guessing. Or can it?
