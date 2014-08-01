@@ -93,6 +93,10 @@ You can pass in a block to filter file operations (both words and names).
 
 None
 
+== Versioning
+
+This project ascribes to {semantic versioning}[http://semver.org].
+
 == Tests
 
 rake test (need mocha, and rake... if you want)
